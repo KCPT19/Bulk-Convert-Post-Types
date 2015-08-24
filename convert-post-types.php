@@ -159,7 +159,7 @@ class KCPT_Bulk_Convert_Post_Type
                             <h4><?php _e ( 'Assign custom taxonomy terms', 'bulk-convert-post-types' ); ?></h4>
                             <?php foreach ( $wp_taxonomies as $tax ) :
                                 if ( ! in_array ( $tax->name,
-                                        array ( 'nav_menu', 'link_category', 'podcast_format' ) )
+                                        array ( 'nav_menu', 'link_category', 'podcast_format', 'format' ) )
                                 ) : ?>
                                     <?php
                                     if ( ! is_taxonomy_hierarchical ( $tax->name ) ) :
@@ -170,7 +170,13 @@ class KCPT_Bulk_Convert_Post_Type
                                         // hierarchical
                                         ?>
                                         <div class="categorychecklistbox">
-                                            <label><?php echo esc_html ( $tax->label ); ?><br/>
+                                            <label>
+                                                <?php echo esc_html ( $tax->label ); ?><br/>
+                                                <?php if( $tax->name === "category" ): ?>
+                                                        <strong>This will remove all other categories and only set what is selected below.</strong>
+                                                <?php endif; ?>
+
+                                            </label>
                                                 <ul class="categorychecklist">
                                                     <?php
                                                     wp_terms_checklist ( 0, array (
@@ -284,7 +290,7 @@ class KCPT_Bulk_Convert_Post_Type
                 } else {
 
                     $taxonomiesPossible = get_object_taxonomies( $new_post_type_object->name );
-                    
+
                     if( in_array( 'category', $taxonomiesPossible ) ) {
 
                         wp_set_object_terms( $post->ID, $postCategory, 'category', false );
