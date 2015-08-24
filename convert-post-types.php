@@ -211,6 +211,8 @@ class KCPT_Bulk_Convert_Post_Type
     function convert ()
     {
 
+        global $wp_taxonomies;
+
         $newPostType  = $_POST[ 'new_post_type' ];
         $oldPostType  = $_POST[ 'old_post_type' ];
         $convertCat   = ( ( isset( $_POST[ 'convert_cat' ] ) and ! empty( $_POST[ 'convert_cat' ] ) ) ? $_POST[ 'convert_cat' ] : false );
@@ -256,8 +258,6 @@ class KCPT_Bulk_Convert_Post_Type
             return;
         }
 
-        global $wp_taxonomies;
-
         foreach ( $items as $post ) {
 
             // Update the post into the database
@@ -274,14 +274,14 @@ class KCPT_Bulk_Convert_Post_Type
 
             } else {
 
+                set_post_type ( $post->ID, $new_post_type_object->name );
+
                 // handle post categories now; otherwise all posts will receive the default
                 if ( 'post' == $new_post_type_object->name && $postCategory ) {
 
-                    wp_set_post_terms ( $post->ID, $postCategory, 'post_category', false );
+                    wp_set_post_terms ( $post->ID, $postCategory, 'category', false );
 
-                }
-
-                set_post_type ( $post->ID, $new_post_type_object->name );
+                } 
 
                 // WPML support. Thanks to Jenny Beaumont! http://www.jennybeaumont.com/post-type-switcher-wpml-fix/
                 if ( function_exists ( 'icl_object_id' ) ) {
