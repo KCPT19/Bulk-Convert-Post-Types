@@ -1,5 +1,4 @@
 <?php
-
 /*
 Plugin Name: Bulk Convert Post Types
 Version: 1.4
@@ -8,6 +7,9 @@ Author URI: http://KCPT.org
 Description: A bulk conversion utility for post types.
 License: GPL2
 */
+
+if (! defined ( 'ABSPATH' ))
+    die ();
 
 
 class KCPT_Bulk_Convert_Post_Type
