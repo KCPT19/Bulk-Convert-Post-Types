@@ -219,6 +219,8 @@ class KCPT_Bulk_Convert_Post_Type
 
         global $wp_taxonomies;
 
+        $postCount = 0;
+
         $newPostType  = $_POST[ 'new_post_type' ];
         $oldPostType  = $_POST[ 'old_post_type' ];
         $convertCat   = ( ( isset( $_POST[ 'convert_cat' ] ) and ! empty( $_POST[ 'convert_cat' ] ) ) ? $_POST[ 'convert_cat' ] : false );
@@ -264,6 +266,8 @@ class KCPT_Bulk_Convert_Post_Type
             return;
         }
 
+        $postCount = count( $items );
+
         foreach ( $items as $post ) {
 
             // Update the post into the database
@@ -287,7 +291,7 @@ class KCPT_Bulk_Convert_Post_Type
 
                     wp_set_post_terms ( $post->ID, $postCategory, 'category', false );
 
-                } else {
+                } elseif( $postCategory and is_array( $postCategory ) ) {
 
                     $taxonomiesPossible = get_object_taxonomies( $new_post_type_object->name );
 
@@ -333,7 +337,7 @@ class KCPT_Bulk_Convert_Post_Type
             }
 
             // set new taxonomy terms
-            foreach ( $wp_taxonomies as $tax ) :
+            foreach ( $wp_taxonomies as $tax ) {
 
                 // hierarchical custom taxonomies
                 if ( $taxonomy and isset( $taxonomy[ $tax->name ] ) and ! empty( $taxonomy[ $tax->name ] ) and is_array ( $taxonomy[ $tax->name ] ) ) {
@@ -375,12 +379,13 @@ class KCPT_Bulk_Convert_Post_Type
 
                 }
 
-            endforeach;
+            }
 
         }
 
         echo '<div class="updated"><p><strong>' .
-                __ ( 'Posts converted.', 'bulk-convert-post-types' ) .
+                $postCount .
+                __ ( ' posts converted.', 'bulk-convert-post-types' ) .
                 '</strong></p></div>';
 
     }
