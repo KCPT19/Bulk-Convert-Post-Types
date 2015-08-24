@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Bulk Convert Post Types
-Version: 1.4
+Version: 1.5
 Author: KCPT
 Author URI: http://KCPT.org
 Description: A bulk conversion utility for post types.
