@@ -281,7 +281,17 @@ class KCPT_Bulk_Convert_Post_Type
 
                     wp_set_post_terms ( $post->ID, $postCategory, 'category', false );
 
-                } 
+                } else {
+
+                    $taxonomiesPossible = get_object_taxonomies( $new_post_type_object->name );
+                    
+                    if( in_array( 'category', $taxonomiesPossible ) ) {
+
+                        wp_set_object_terms( $post->ID, $postCategory, 'category', false );
+
+                    }
+
+                }
 
                 // WPML support. Thanks to Jenny Beaumont! http://www.jennybeaumont.com/post-type-switcher-wpml-fix/
                 if ( function_exists ( 'icl_object_id' ) ) {
