@@ -175,11 +175,11 @@ class KCPT_Bulk_Convert_Post_Type
                                                     <?php
                                                     wp_terms_checklist ( 0, array (
                                                                     'descendants_and_self' => 0,
-                                                                    'selected_cats' => false,
-                                                                    'popular_cats' => false,
-                                                                    'walker' => null,
-                                                                    'taxonomy' => $tax->name,
-                                                                    'checked_ontop' => true,
+                                                                    'selected_cats'        => false,
+                                                                    'popular_cats'         => false,
+                                                                    'walker'               => null,
+                                                                    'taxonomy'             => $tax->name,
+                                                                    'checked_ontop'        => true,
                                                             )
                                                     );
                                                     ?>
@@ -211,12 +211,12 @@ class KCPT_Bulk_Convert_Post_Type
     function convert ()
     {
 
-        $newPostType = $_POST[ 'new_post_type' ];
-        $oldPostType = $_POST[ 'old_post_type' ];
-        $convertCat = isset( $_POST[ 'convert_cat' ] ) and ! empty( $_POST[ 'convert_cat' ] ) ? $_POST[ 'convert_cat' ] : false;
-        $postParent = isset( $_POST[ 'page_parent' ] ) and ! empty ( $_POST[ 'page_parent' ] ) ? $_POST[ 'page_parent' ] : false;
-        $postCategory = isset( $_POST[ 'post_category' ] ) and ! empty( $_POST[ 'post_category' ] ) ? $_POST[ 'post_category' ] : false;
-        $taxonomy = isset( $_POST[ 'tax_input' ] ) and ! empty( $_POST[ 'tax_input' ] ) ? $_POST[ 'tax_input' ] : false;
+        $newPostType  = $_POST[ 'new_post_type' ];
+        $oldPostType  = $_POST[ 'old_post_type' ];
+        $convertCat   = ( ( isset( $_POST[ 'convert_cat' ] ) and ! empty( $_POST[ 'convert_cat' ] ) ) ? $_POST[ 'convert_cat' ] : false );
+        $postParent   = ( ( isset( $_POST[ 'page_parent' ] ) and ! empty ( $_POST[ 'page_parent' ] ) ) ? $_POST[ 'page_parent' ] : false );
+        $postCategory = ( ( isset( $_POST[ 'post_category' ] ) and ! empty( $_POST[ 'post_category' ] ) ) ? $_POST[ 'post_category' ] : false );
+        $taxonomy     = ( ( isset( $_POST[ 'tax_input' ] ) and ! empty( $_POST[ 'tax_input' ] ) ) ? $_POST[ 'tax_input' ] : false );
 
         // check for invalid post type choices
         if ( $newPostType == -1 || $oldPostType == -1 ) {
@@ -233,9 +233,9 @@ class KCPT_Bulk_Convert_Post_Type
         }
 
         $query = array (
-                'posts_per_page'    => -1,
-                'post_status'       => 'any',
-                'post_type'         => $oldPostType
+                'posts_per_page' => -1,
+                'post_status'    => 'any',
+                'post_type'      => $oldPostType
         );
 
         if ( $convertCat && $convertCat > 1 ) {
