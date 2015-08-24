@@ -8,8 +8,9 @@ Description: A bulk conversion utility for post types.
 License: GPL2
 */
 
-if (! defined ( 'ABSPATH' ))
+if ( ! defined ( 'ABSPATH' ) ) {
     die ();
+}
 
 
 class KCPT_Bulk_Convert_Post_Type
@@ -174,24 +175,27 @@ class KCPT_Bulk_Convert_Post_Type
                                         <div class="categorychecklistbox">
                                             <label>
                                                 <?php echo esc_html ( $tax->label ); ?><br/>
-                                                <?php if( $tax->name === "category" ): ?>
-                                                        <strong>This will remove all other categories and only set what is selected below.</strong>
+                                                <?php if ( $tax->name === "category" ): ?>
+                                                    <strong>This will remove all other categories and only set what is
+                                                        selected below.</strong>
                                                 <?php endif; ?>
 
                                             </label>
-                                                <ul class="categorychecklist">
-                                                    <?php
-                                                    wp_terms_checklist ( 0, array (
-                                                                    'descendants_and_self' => 0,
-                                                                    'selected_cats'        => false,
-                                                                    'popular_cats'         => false,
-                                                                    'walker'               => null,
-                                                                    'taxonomy'             => $tax->name,
-                                                                    'checked_ontop'        => true,
-                                                            )
-                                                    );
-                                                    ?>
-                                                </ul></div>
+                                            <ul class="categorychecklist">
+                                                <?php
+                                                wp_terms_checklist ( 0,
+                                                        array (
+                                                                'descendants_and_self' => 0,
+                                                                'selected_cats'        => false,
+                                                                'popular_cats'         => false,
+                                                                'walker'               => null,
+                                                                'taxonomy'             => $tax->name,
+                                                                'checked_ontop'        => true,
+                                                        )
+                                                );
+                                                ?>
+                                            </ul>
+                                        </div>
                                         <?php
                                     endif;
                                     ?>
@@ -268,7 +272,7 @@ class KCPT_Bulk_Convert_Post_Type
             return;
         }
 
-        $postCount = count( $items );
+        $postCount = count ( $items );
 
         foreach ( $items as $post ) {
 
@@ -293,13 +297,13 @@ class KCPT_Bulk_Convert_Post_Type
 
                     wp_set_post_terms ( $post->ID, $postCategory, 'category', false );
 
-                } elseif( $postCategory and is_array( $postCategory ) ) {
+                } elseif ( $postCategory and is_array ( $postCategory ) ) {
 
-                    $taxonomiesPossible = get_object_taxonomies( $new_post_type_object->name );
+                    $taxonomiesPossible = get_object_taxonomies ( $new_post_type_object->name );
 
-                    if( in_array( 'category', $taxonomiesPossible ) ) {
+                    if ( in_array ( 'category', $taxonomiesPossible ) ) {
 
-                        wp_set_object_terms( $post->ID, $postCategory, 'category', false );
+                        wp_set_object_terms ( $post->ID, $postCategory, 'category', false );
 
                     }
 
